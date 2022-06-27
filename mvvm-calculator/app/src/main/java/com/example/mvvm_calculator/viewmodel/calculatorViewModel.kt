@@ -40,12 +40,20 @@ class CalculatorViewModel():ViewModel() {
 
         for (i in opList){
             opIndex = _inputVar.value?.indexOf(i)
+            Log.d("Ddddd", "inputResult: index !! !! !!  $opIndex")
+
+
+
             if(opIndex!=-1){
                 val first = opIndex?.let { inputVar.value?.substring(0, it) }?.toInt()
-                val second = opIndex?.let { inputVar.value?.substring(it, inputVar.value!!.length) }?.toInt()
+                Log.d("Ddddd", "inputResult: $first")
+
+                val second = opIndex?.let { inputVar.value?.substring(it+1, inputVar.value!!.length) }?.toInt()
+                Log.d("Ddddd", "inputResult: $second")
 
                 val opCode = opIndex?.let { inputVar.value?.get(it) }
-                val res: Int = when(opCode){
+                Log.d("Ddddd", "inputResult: $opCode")
+                val res: Any = when(opCode){
                     '+' -> first!!+second!!
                     '-' -> first!! - second!!
                     '*' ->first!! * second!!

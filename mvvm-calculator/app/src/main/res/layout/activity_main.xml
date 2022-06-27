@@ -283,7 +283,7 @@
                 android:backgroundTint="#FF9800"
                 android:text="-"
                 android:textColor="@color/white"
-                android:onClick="@{() -> vm.inputNumber(2)}"
+                android:onClick="@{() -> vm.inputOperator(2)}"
 
                 android:textSize="32sp"
                 app:cornerRadius="36dp" />
