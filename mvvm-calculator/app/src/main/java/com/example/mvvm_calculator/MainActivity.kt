@@ -14,27 +14,17 @@ import com.example.mvvm_calculator.viewmodel.CalculatorViewModel
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var viewModel : CalculatorViewModel
     private lateinit var binding: ActivityMainBinding
+    private val viewModel: CalculatorViewModel by viewModels()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
-
-        binding.apply {
-            lifecycleOwner = this@MainActivity
-        }
-        viewModel = ViewModelProvider(this)[CalculatorViewModel::class.java]
-        viewModel.init()
+        binding.lifecycleOwner = this
         binding.vm = viewModel
 
-        binding.button0.setOnClickListener(){
-            Log.d("hello", "onCreate: dsfsfsdf")
-        }
-
-
-        setContentView(R.layout.activity_main)
+        //하하 이녀석 때문에 안보이는 구나 참고!!!!
+//        setContentView(R.layout.activity_main)
     }
 }
