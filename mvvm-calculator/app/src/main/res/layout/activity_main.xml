@@ -16,18 +16,35 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
+
     <TextView
         android:id="@+id/solution_tv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/result_tv"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginStart="200dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="@{vm.resVar}"
         android:textAlignment="textEnd"
         android:textColor="@color/black"
-        android:text="@{vm.resVar}"
+        android:textSize="32sp" />
+
+    <TextView
+        android:id="@+id/solution_tv2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/result_tv"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="220dp"
+        android:layout_marginBottom="0dp"
+        android:fadeScrollbars="true"
+        android:scrollbars="vertical"
+        android:text="@{vm.log}"
+        android:textAlignment="textEnd"
+        android:textColor="@color/black"
         android:textSize="32sp" />
 
     <TextView
@@ -36,7 +53,7 @@
         android:layout_height="wrap_content"
         android:layout_above="@id/buttons_layout"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="0dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
         android:text="@{vm.inputVar}"
@@ -296,12 +313,13 @@
             android:orientation="horizontal">
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/button_ac"
+                android:id="@+id/button_log"
                 style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"
                 android:layout_width="72dp"
                 android:layout_height="72dp"
                 android:layout_margin="12dp"
                 android:backgroundTint="#000000"
+                android:text="🕑"
                 android:textColor="@color/white"
                 android:textSize="20sp"
                 app:cornerRadius="36dp" />
@@ -342,5 +360,6 @@
                 android:text="=" />
         </LinearLayout>
     </LinearLayout>
+
 </RelativeLayout>
 </layout>

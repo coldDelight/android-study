@@ -1,22 +1,32 @@
 package com.example.mvvm_calculator.viewmodel
 
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.udojava.evalex.Expression
-import java.math.BigDecimal
-import java.util.*
+import com.example.mvvm_calculator.dialog.LogDialog
+// 연산자 중복 입력
+// . 처리
+// 소수점
+// 연산자 여러개
+// 괄호
+// 연산자 우선순위
 
 class CalculatorViewModel():ViewModel() {
     private val _resVar = MutableLiveData<String>()
     var resVar :  LiveData<String> = _resVar
     private val _inputVar = MutableLiveData<String>()
     var inputVar : LiveData<String> =  _inputVar
+
+    private val _log = MutableLiveData<String>()
+    var log : LiveData<String> =  _log
     init {
         _resVar.value=""
         _inputVar.value=""
+        _log.value=""
     }
+
 
     fun inputNumber(number:Int){
         _inputVar.value =  _inputVar.value.plus("$number")
@@ -37,22 +47,12 @@ class CalculatorViewModel():ViewModel() {
     fun inputResult(){
         var opIndex :Int?=-1
         val opList = listOf<String>("+","-","*","/")
-
         for (i in opList){
             opIndex = _inputVar.value?.indexOf(i)
-            Log.d("Ddddd", "inputResult: index !! !! !!  $opIndex")
-
-
-
             if(opIndex!=-1){
                 val first = opIndex?.let { inputVar.value?.substring(0, it) }?.toInt()
-                Log.d("Ddddd", "inputResult: $first")
-
                 val second = opIndex?.let { inputVar.value?.substring(it+1, inputVar.value!!.length) }?.toInt()
-                Log.d("Ddddd", "inputResult: $second")
-
                 val opCode = opIndex?.let { inputVar.value?.get(it) }
-                Log.d("Ddddd", "inputResult: $opCode")
                 val res: Any = when(opCode){
                     '+' -> first!!+second!!
                     '-' -> first!! - second!!
@@ -60,12 +60,13 @@ class CalculatorViewModel():ViewModel() {
                     '/' -> first!! / second!!
                     else-> -1
                 }
-                _inputVar.value = ""
                 _resVar.value =  res.toString()
+                _log.value = _log.value.plus(inputVar.value).plus(" = ").plus(res.toString()).plus("\n")
+                _inputVar.value = ""
+
                 return
             }
         }
-
 //        val res:Int = when(opCode){
 //            PLUS -> first+second
 //            MINUS ->first-second
@@ -77,12 +78,12 @@ class CalculatorViewModel():ViewModel() {
 
     }
 
-
-
     fun clearNumber(){
         _inputVar.value=""
         _resVar.value=""
     }
+
+
 
     companion object {
         const val PLUS = 1

@@ -3,7 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/myWorld/Android/android-study/mvvm-calculator/app/src/main/res/layout/activity_main.xml" value="0.50625" />
+        <entry key="..\:/myWorld/Android/android-study/mvvm-calculator/app/src/main/res/layout/activity_main.xml" value="0.33" />
+        <entry key="..\:/myWorld/Android/android-study/mvvm-calculator/app/src/main/res/layout/layout_dialog.xml" value="0.5052083333333334" />
+        <entry key="..\:/myWorld/Android/android-study/mvvm-calculator/app/src/main/res/layout/log_item.xml" value="0.44895833333333335" />
       </map>
     </option>
   </component>
