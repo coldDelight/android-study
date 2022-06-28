@@ -7,6 +7,7 @@ class LogDialogViewModel(): ViewModel() {
     val _allLogData = MutableLiveData<ArrayList<Log>>()
     var allLogData :  LiveData<ArrayList<Log>> = _allLogData
 
+
     init{
         _allLogData.value = ArrayList<Log>()
     }

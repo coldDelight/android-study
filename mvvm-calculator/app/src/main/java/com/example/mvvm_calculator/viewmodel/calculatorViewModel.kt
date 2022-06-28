@@ -13,6 +13,10 @@ import com.example.mvvm_calculator.dialog.LogDialog
 // 괄호
 // 연산자 우선순위
 
+//MutableLiveData 상속 -> null 안드롤어 ㅇ게
+// ENUM !! ! !
+
+// VM context XXX -> 필요한 경우는 ????  can win
 class CalculatorViewModel():ViewModel() {
     private val _resVar = MutableLiveData<String>()
     var resVar :  LiveData<String> = _resVar
