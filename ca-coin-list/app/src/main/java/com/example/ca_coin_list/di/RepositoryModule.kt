@@ -12,6 +12,7 @@ import com.example.domain.repository.CoinRepository
 
 @Module
 @InstallIn(SingletonComponent::class)
+//Repository 의존성
 class RepositoryModule {
 
     @Provides

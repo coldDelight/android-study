@@ -9,7 +9,6 @@ import com.example.ca_coin_list.base.BaseViewModel
 import com.example.domain.model.CoinResponse
 import androidx.lifecycle.viewModelScope
 import com.example.ca_coin_list.widget.utils.ScreenState
-import com.example.domain.utils.ErrorType
 import kotlinx.coroutines.launch
 
 
@@ -17,15 +16,15 @@ import kotlinx.coroutines.launch
 class MainViewModel @Inject constructor(
     private val getCoinUseCase: GetCoinUseCase
 ) : BaseViewModel() {
-    val eventUserRepo: LiveData<List<CoinResponse>> get() = _eventUserRepo
-    private val _eventUserRepo = SingleLiveEvent<List<CoinResponse>>()
+    private val _eventCoin = SingleLiveEvent<List<CoinResponse>>()
+    val eventCoin: LiveData<List<CoinResponse>> get() = _eventCoin
 
 
-    fun getUserRepo(owner: String) = viewModelScope.launch {
+    fun getCoin() = viewModelScope.launch {
         val response = getCoinUseCase.execute(this@MainViewModel,)
         if(response == null) mutableScreenState.postValue(ScreenState.ERROR) else {
             mutableScreenState.postValue(ScreenState.RENDER)
-            _eventUserRepo.postValue(response)
+            _eventCoin.postValue(response)
         }
     }
 }

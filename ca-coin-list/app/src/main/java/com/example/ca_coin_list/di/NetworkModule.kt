@@ -16,6 +16,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
+//레트로핏 의존성
 object NetworkModule {
     @Provides
     @Singleton
@@ -50,12 +51,10 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideGithubApiService(retrofit: Retrofit): CoinApi {
+    fun provideCoinApiService(retrofit: Retrofit): CoinApi {
         return retrofit.create(CoinApi::class.java)
     }
 
     private fun getLoggingInterceptor(): HttpLoggingInterceptor =
         HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BODY }
-
-
 }

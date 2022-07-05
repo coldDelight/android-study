@@ -22,7 +22,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
     }
 
     fun clickSearchBtn(view: View){
-        mainViewModel.getUserRepo(binding.githubNameEditTxt.text.toString())
+        mainViewModel.getCoin()
     }
 
     private fun observeViewModel(){
@@ -35,9 +35,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
             }
         }
 
-        mainViewModel.eventUserRepo.observe(this) {
+        mainViewModel.eventCoin.observe(this) {
             it.map { item ->
-                binding.responseTxt.text = item.url
+//                Log.d("taggg", "observeViewModel: ${item.symbol}")
+                binding.responseTxt.text = item.symbol+" "+item.rank
             }
         }
     }

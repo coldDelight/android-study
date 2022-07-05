@@ -12,6 +12,7 @@ import com.example.data.repository.remote.datasourceImpl.CoinDataSourceImpl
 
 @Module
 @InstallIn(SingletonComponent::class)
+//DataSource 관련
 class DataSourceImplModule {
 
     @Provides

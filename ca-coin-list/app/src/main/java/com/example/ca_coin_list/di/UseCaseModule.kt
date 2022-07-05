@@ -14,5 +14,5 @@ import com.example.domain.usecase.GetCoinUseCase
 class UseCaseModule {
     @Provides
     @Singleton
-    fun provideGetUserRepoUseCase(repository: CoinRepository) = GetCoinUseCase(repository)
+    fun provideCoinUseCase(repository: CoinRepository) = GetCoinUseCase(repository)
 }

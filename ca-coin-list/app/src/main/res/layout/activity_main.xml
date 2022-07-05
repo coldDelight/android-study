@@ -16,15 +16,15 @@
         android:orientation="vertical"
         tools:context=".view.MainActivity">
 
-        <EditText
-            android:id="@+id/github_name_edit_txt"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="coinList" />
+<!--        <EditText-->
+<!--            android:id="@+id/github_name_edit_txt"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:hint="coinList" />-->
 
         <Button
             android:id="@+id/search_btn"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:onClick="@{activity::clickSearchBtn}"
             android:text="검색" />
@@ -37,5 +37,12 @@
             android:textColor="@color/black"
             android:text=""
             />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"/>
     </LinearLayout>
 </layout>

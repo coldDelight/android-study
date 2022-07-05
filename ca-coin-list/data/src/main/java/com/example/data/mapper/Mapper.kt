@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 
 
 object Mapper {
-    fun mapperGithub(response: List<CoinResponse>?) : List<com.example.domain.model.CoinResponse>? {
+    fun mapperCoin(response: List<CoinResponse>?) : List<com.example.domain.model.CoinResponse>? {
         return response?.toDomain()
     }
 

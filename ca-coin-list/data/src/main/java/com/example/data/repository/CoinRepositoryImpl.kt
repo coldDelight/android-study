@@ -13,6 +13,6 @@ class CoinRepositoryImpl @Inject constructor(
     override suspend fun getCoin(
         remoteErrorEmitter: RemoteErrorEmitter,
     ): List<CoinResponse>? {
-        return Mapper.mapperGithub(coinDataSource.getCoin(remoteErrorEmitter))
+        return Mapper.mapperCoin(coinDataSource.getCoin(remoteErrorEmitter))
     }
 }
