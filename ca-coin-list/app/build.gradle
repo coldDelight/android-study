@@ -81,11 +81,11 @@ dependencies {
     implementation (AndroidX.FRAGMENT)
 
     //nav component
-    implementation (NavComponent.NAVIGATION_FRAGMENT)
-    implementation (NavComponent.NAVIGATION_UI)
-    implementation (NavComponent.NAVIGATION_DYNAMIC_FEATURES_FRAGMENT)
-    androidTestImplementation (NavComponent.NAVIGATION_TESTING)
-    implementation (NavComponent.NAVIGATION_COMPOSE)
+//    implementation (NavComponent.NAVIGATION_FRAGMENT)
+//    implementation (NavComponent.NAVIGATION_UI)
+//    implementation (NavComponent.NAVIGATION_DYNAMIC_FEATURES_FRAGMENT)
+//    androidTestImplementation (NavComponent.NAVIGATION_TESTING)
+//    implementation (NavComponent.NAVIGATION_COMPOSE)
 
     //datastore
     implementation (AndroidX.DATASTORE)

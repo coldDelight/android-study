@@ -1,30 +1,57 @@
 package com.example.ca_coin_list.viewmodel
 
-import androidx.lifecycle.LiveData
-import com.example.ca_coin_list.widget.utils.SingleLiveEvent
+import android.util.Log
+import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
-import com.example.domain.usecase.GetCoinUseCase
-import com.example.ca_coin_list.base.BaseViewModel
-import com.example.domain.model.CoinResponse
+import com.example.ca_coin_list.usecase.GetCoinUseCase
 import androidx.lifecycle.viewModelScope
-import com.example.ca_coin_list.widget.utils.ScreenState
-import kotlinx.coroutines.launch
+import com.example.ca_coin_list.model.PresentationCoin
+import com.example.domain.Resource
 
+import com.example.ca_coin_list.utils.State
+import kotlinx.coroutines.flow.*
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    private val getCoinUseCase: GetCoinUseCase
-) : BaseViewModel() {
-    private val _eventCoin = SingleLiveEvent<List<CoinResponse>>()
-    val eventCoin: LiveData<List<CoinResponse>> get() = _eventCoin
+    private val useCase: GetCoinUseCase
+): ViewModel() {
 
+    data class CoinListState(
+        val state: State = State.LOADING,
+        val data: List<PresentationCoin> = emptyList(),
+        val error: String = ""
+    )
 
-    fun getCoin() = viewModelScope.launch {
-        val response = getCoinUseCase.execute(this@MainViewModel,)
-        if(response == null) mutableScreenState.postValue(ScreenState.ERROR) else {
-            mutableScreenState.postValue(ScreenState.RENDER)
-            _eventCoin.postValue(response)
-        }
+    private val _coinListState = MutableStateFlow(CoinListState())
+    val coinListState: StateFlow<CoinListState> = _coinListState.asStateFlow()
+
+    private fun getCoins() {
+        useCase().onEach { result ->
+            Log.d("test", "getCoins: $result")
+            when (result) {
+                is Resource.Loading -> {
+                    _coinListState.value = CoinListState()
+                }
+                is Resource.Success -> {
+                    _coinListState.value = CoinListState(
+                        state = State.SUCCESS,
+                        error = "",
+                        data = result.data ?: emptyList()
+                    )
+                }
+                is Resource.Error -> {
+                    _coinListState.value = CoinListState(
+                        state = State.ERROR,
+                        error = result.message,
+                        data = emptyList()
+                    )
+                }
+            }
+        }.launchIn(viewModelScope)
+    }
+
+    init {
+        getCoins()
     }
 }

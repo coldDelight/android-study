@@ -47,6 +47,9 @@ dependencies {
     implementation (OkHttp.OKHTTP)
     implementation (OkHttp.LOGGING_INTERCEPTOR)
 
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.1'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.1'
+
     // dager hilt
     implementation (DaggerHilt.DAGGER_HILT)
     kapt (DaggerHilt.DAGGER_HILT_COMPILER)

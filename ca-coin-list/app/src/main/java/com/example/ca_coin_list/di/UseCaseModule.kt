@@ -6,13 +6,17 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 import com.example.domain.repository.CoinRepository
-import com.example.domain.usecase.GetCoinUseCase
-
+import com.example.ca_coin_list.usecase.GetCoinUseCase
 
 @Module
 @InstallIn(SingletonComponent::class)
-class UseCaseModule {
+object UseCaseModule {
     @Provides
     @Singleton
-    fun provideCoinUseCase(repository: CoinRepository) = GetCoinUseCase(repository)
+    fun provideCoinListUseCase(
+        repository: CoinRepository
+    ): GetCoinUseCase {
+        return GetCoinUseCase(repository)
+    }
+
 }

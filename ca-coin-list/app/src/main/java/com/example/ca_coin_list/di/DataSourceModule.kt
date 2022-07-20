@@ -8,20 +8,17 @@ import javax.inject.Singleton
 import com.example.data.remote.api.CoinApi
 import com.example.data.repository.remote.datasource.CoinDataSource
 import com.example.data.repository.remote.datasourceImpl.CoinDataSourceImpl
+import retrofit2.Retrofit
 
 
 @Module
 @InstallIn(SingletonComponent::class)
-//DataSource 관련
-class DataSourceImplModule {
-
+object DataSourceModule {
     @Provides
     @Singleton
-    fun provideMainDataSource(
-        coinApi: CoinApi
-    ) : CoinDataSource {
-        return CoinDataSourceImpl(
-            coinApi
-        )
+    fun provideCoinListDataSource(
+        retrofit: Retrofit
+    ): CoinDataSource {
+        return CoinDataSourceImpl(retrofit)
     }
 }

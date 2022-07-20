@@ -1,9 +1,10 @@
 package com.example.data.repository.remote.datasource
 
-import com.example.data.remote.model.CoinResponse
-import com.example.domain.utils.RemoteErrorEmitter
-
+import com.example.data.remote.model.CoinListResponse
+import retrofit2.http.GET
 
 interface CoinDataSource {
-    suspend fun getCoin(remoteErrorEmitter: RemoteErrorEmitter) : List<CoinResponse>?
+
+    @GET("/v1/coins")
+    suspend fun getCoin(): List<CoinListResponse>
 }

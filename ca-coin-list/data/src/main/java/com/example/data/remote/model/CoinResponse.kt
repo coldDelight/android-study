@@ -1,23 +1,20 @@
 package com.example.data.remote.model
 
 import com.google.gson.annotations.SerializedName
+import com.example.domain.model.DomainCoin
 
-data class CoinResponse(
-    @SerializedName("id")
-    val id: String?,
-    @SerializedName("name")
-    val name: String?,
-    @SerializedName("symbol")
-    val symbol: String?,
-    @SerializedName("html_url")
-    val url: String?,
-    @SerializedName("rank")
-    val rank: Int?,
-    @SerializedName("is_new")
-    val is_new: Boolean?,
+
+data class CoinListResponse(
+    val id: String,
     @SerializedName("is_active")
-    val is_active: Boolean?,
-    @SerializedName("type")
-    val type: String?,
-
+    val isActive: Boolean,
+    @SerializedName("is_new")
+    val isNew: Boolean,
+    val name: String,
+    val rank: Int,
+    val symbol: String,
+    val type: String
+)
+fun CoinListResponse.toDomainCoin(): DomainCoin = DomainCoin(
+    isActive, isNew, name, rank, symbol, id
 )

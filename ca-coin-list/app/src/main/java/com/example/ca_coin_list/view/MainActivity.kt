@@ -2,44 +2,65 @@ package com.example.ca_coin_list.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.ca_coin_list.CoinListAdapter
 import com.example.ca_coin_list.R
-import com.example.ca_coin_list.base.BaseActivity
 import com.example.ca_coin_list.databinding.ActivityMainBinding
 import com.example.ca_coin_list.viewmodel.MainViewModel
-import com.example.ca_coin_list.widget.utils.ScreenState
+import com.example.ca_coin_list.utils.State
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
-class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
-    private val mainViewModel by viewModels<MainViewModel>()
+class MainActivity : AppCompatActivity() {
 
-    override fun init() {
-        binding.activity= this
-        observeViewModel()
+    private val binding: ActivityMainBinding by lazy {
+        DataBindingUtil.setContentView(this, R.layout.activity_main)
     }
 
-    fun clickSearchBtn(view: View){
-        mainViewModel.getCoin()
-    }
+    private val model: MainViewModel by viewModels()
 
-    private fun observeViewModel(){
-        mainViewModel.mutableScreenState.observe(this) {
-            Log.d("로그", "$it")
-            when (it) {
-                ScreenState.RENDER -> Log.d("ff", "observeViewModel: ddd")
-                ScreenState.ERROR -> Log.d("fff", "observeViewModel: ")
-                else -> Log.d("ddd", "observeViewModel: dddd")
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        lifecycleScope.launchWhenStarted {
+            model.coinListState.collectLatest {
+                when (it.state) {
+                    State.LOADING -> {
+                        binding.loading.visibility = View.VISIBLE
+                    }
+                    State.SUCCESS -> {
+                        binding.loading.visibility = View.GONE
+                        CoinListAdapter(it.data).also { adapter ->
+                            binding.rv.adapter = adapter
+                            binding.rv.layoutManager = LinearLayoutManager(
+                                this@MainActivity,
+                                LinearLayoutManager.VERTICAL,
+                                false
+                            )
+                        }
+                        binding.rv.addItemDecoration(
+                            DividerItemDecoration(
+                                this@MainActivity,
+                                DividerItemDecoration.VERTICAL
+                            )
+                        )
+                    }
+
+                    State.ERROR -> {
+                        binding.loading.visibility = View.GONE
+                        Toast.makeText(this@MainActivity, it.error, Toast.LENGTH_SHORT).show()
+                    }
+                }
             }
         }
 
-        mainViewModel.eventCoin.observe(this) {
-            it.map { item ->
-//                Log.d("taggg", "observeViewModel: ${item.symbol}")
-                binding.responseTxt.text = item.symbol+" "+item.rank
-            }
-        }
     }
+
 }

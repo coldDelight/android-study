@@ -1,6 +1,5 @@
 package com.example.ca_coin_list.di
 
-import com.example.ca_coin_list.widget.utils.Utils.BASE_URL
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -14,47 +13,41 @@ import com.example.data.remote.api.CoinApi
 
 import javax.inject.Singleton
 
+//레트로핏 의존성
 @Module
 @InstallIn(SingletonComponent::class)
-//레트로핏 의존성
 object NetworkModule {
-    @Provides
-    @Singleton
-    fun provideHttpClient(): OkHttpClient {
-        return OkHttpClient.Builder()
-            .readTimeout(10, TimeUnit.SECONDS)
-            .connectTimeout(10, TimeUnit.SECONDS)
-            .writeTimeout(15, TimeUnit.SECONDS)
-            .addInterceptor(getLoggingInterceptor())
-            .build()
-    }
 
-    @Singleton
     @Provides
-    fun provideRetrofitInstance(
-        okHttpClient: OkHttpClient,
-        gsonConverterFactory: GsonConverterFactory
-    ): Retrofit {
+    @Singleton
+    fun provideRetrofit(): Retrofit {
         return Retrofit.Builder()
-            .baseUrl(BASE_URL)
-            .client(okHttpClient)
-            .client(provideHttpClient())
-            .addConverterFactory(gsonConverterFactory)
+            .baseUrl("https://api.coinpaprika.com")
+            .client(provideOkHttpClient())
+            .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
 
     @Provides
     @Singleton
-    fun provideConverterFactory(): GsonConverterFactory {
-        return GsonConverterFactory.create()
+    fun provideOkHttpClient(): OkHttpClient {
+        return OkHttpClient.Builder()
+            .connectTimeout(3, TimeUnit.SECONDS)
+            .readTimeout(5, TimeUnit.SECONDS)
+            .addInterceptor(provideOkHttpLogging())
+            .build()
     }
 
     @Provides
     @Singleton
-    fun provideCoinApiService(retrofit: Retrofit): CoinApi {
-        return retrofit.create(CoinApi::class.java)
+    fun provideOkHttpLogging(): HttpLoggingInterceptor {
+        return HttpLoggingInterceptor().apply {
+            level = if (true) {
+                HttpLoggingInterceptor.Level.BODY
+            } else {
+                HttpLoggingInterceptor.Level.NONE
+            }
+        }
     }
 
-    private fun getLoggingInterceptor(): HttpLoggingInterceptor =
-        HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BODY }
 }
