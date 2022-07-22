@@ -29,6 +29,12 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+    viewBinding {
+        enabled = true
+    }
+    dataBinding{
+        enabled = true
+    }
 }
 
 dependencies {
@@ -43,5 +49,9 @@ dependencies {
 
     //불러오기
     implementation 'com.github.coldDelight:hashtag-example:1.0'
+
+    implementation "androidx.viewpager2:viewpager2:1.0.0"
+    def lifecycle_version = "2.5.0"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
 
 }

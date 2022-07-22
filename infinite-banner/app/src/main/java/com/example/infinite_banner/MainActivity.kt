@@ -1,15 +1,23 @@
 package com.example.infinite_banner
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import com.example.hashtag_text.performAdd
+import com.example.infinite_banner.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        Log.d("test", "onCreate:${performAdd(10,20)} ")
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        initEvent()
+    }
 
+    private fun initEvent() {
+        binding.banner.setOnClickListener {
+            startActivity(Intent(this, InfiniteBannerActivity::class.java))
+        }
     }
 }

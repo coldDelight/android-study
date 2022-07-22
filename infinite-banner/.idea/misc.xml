@@ -1,5 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/myWorld/Android/android-study/infinite-banner/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.3005" />
+        <entry key="..\:/myWorld/Android/android-study/infinite-banner/app/src/main/res/drawable/gray_stroke.xml" value="0.47" />
+        <entry key="..\:/myWorld/Android/android-study/infinite-banner/app/src/main/res/drawable/ic_launcher_background.xml" value="0.3005" />
+        <entry key="..\:/myWorld/Android/android-study/infinite-banner/app/src/main/res/layout/activity_infinite_banner.xml" value="0.4701086956521739" />
+        <entry key="..\:/myWorld/Android/android-study/infinite-banner/app/src/main/res/layout/activity_main.xml" value="0.4701086956521739" />
+        <entry key="..\:/myWorld/Android/android-study/infinite-banner/app/src/main/res/layout/infinite_banner.xml" value="0.4701086956521739" />
+        <entry key="..\:/myWorld/Android/android-study/infinite-banner/app/src/main/res/layout/list_item_banner.xml" value="0.4701086956521739" />
+      </map>
+    </option>
+  </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
