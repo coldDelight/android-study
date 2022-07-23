@@ -9,10 +9,19 @@
         android:gravity="center"
         tools:context=".MainActivity">
 
+        <EditText
+            android:id="@+id/editTextNumber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="시간초 입력"
+            android:inputType="number" />
+
         <Button
             android:id="@+id/banner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="베너 이동!" />
+
     </LinearLayout>
 </layout>

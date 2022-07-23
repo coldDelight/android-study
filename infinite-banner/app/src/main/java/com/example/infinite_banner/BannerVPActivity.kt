@@ -17,6 +17,7 @@ class BannerVPActivity : AppCompatActivity() {
         binding = ActivityInfiniteBannerBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+
         binding.autoScrollViewPager.adapter = BannerAdapter(list)
         binding.autoScrollViewPager.orientation = ViewPager2.ORIENTATION_HORIZONTAL
 

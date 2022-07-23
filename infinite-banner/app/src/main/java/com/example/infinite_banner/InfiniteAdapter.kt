@@ -16,6 +16,7 @@ class InfiniteAdapter(var list: MutableList<Int>) : RecyclerView.Adapter<Infinit
         }
     }
 
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): InfiniteViewHolder {
         var view = LayoutInflater.from(parent.context).inflate(R.layout.list_item_banner, parent, false)
         return InfiniteViewHolder(view)

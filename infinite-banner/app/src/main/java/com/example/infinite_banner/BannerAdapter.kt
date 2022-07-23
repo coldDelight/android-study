@@ -16,6 +16,7 @@ class BannerAdapter(var list: MutableList<Int>) : RecyclerView.Adapter<BannerAda
         }
     }
 
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BannerViewHolder {
         var view = LayoutInflater.from(parent.context).inflate(R.layout.list_item_banner, parent, false)
         return BannerViewHolder(view)

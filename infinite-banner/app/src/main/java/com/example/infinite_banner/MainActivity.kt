@@ -1,8 +1,8 @@
 package com.example.infinite_banner
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import com.example.infinite_banner.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -17,7 +17,11 @@ class MainActivity : AppCompatActivity() {
 
     private fun initEvent() {
         binding.banner.setOnClickListener {
-            startActivity(Intent(this, InfiniteBannerActivity::class.java))
+            val intervalTime = binding.editTextNumber.text.toString()
+            val intent = Intent(this@MainActivity, InfiniteBannerActivity::class.java)
+            intent.putExtra("intervalTime", intervalTime.toLong()*1000);
+            startActivity(intent);
+//            startActivity(Intent(this, InfiniteBannerActivity::class.java))
         }
     }
 }
