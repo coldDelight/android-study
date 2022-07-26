@@ -5,9 +5,10 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
-import com.example.data.remote.api.CoinApi
 import com.example.data.repository.remote.datasource.CoinDataSource
+import com.example.data.repository.remote.datasource.CoinDetailDataSource
 import com.example.data.repository.remote.datasourceImpl.CoinDataSourceImpl
+import com.example.data.repository.remote.datasourceImpl.CoinDetailDataSourceImpl
 import retrofit2.Retrofit
 
 
@@ -20,5 +21,13 @@ object DataSourceModule {
         retrofit: Retrofit
     ): CoinDataSource {
         return CoinDataSourceImpl(retrofit)
+    }
+
+    @Provides
+    @Singleton
+    fun provideCoinDetailDataSource(
+        retrofit: Retrofit
+    ): CoinDetailDataSource {
+        return CoinDetailDataSourceImpl(retrofit)
     }
 }

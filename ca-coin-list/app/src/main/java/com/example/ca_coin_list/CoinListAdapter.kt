@@ -9,7 +9,6 @@ import com.example.ca_coin_list.model.PresentationCoin
 class CoinListAdapter(private val list: List<PresentationCoin>): RecyclerView.Adapter<CoinListAdapter.CoinViewHolder>() {
 
     inner class CoinViewHolder(private val binding: ItemCoinBinding): RecyclerView.ViewHolder(binding.root){
-
         fun bind(presentationCoin: PresentationCoin) {
             binding.item = presentationCoin
         }

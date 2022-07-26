@@ -1,7 +1,5 @@
 package com.example.domain.model
 
-//import com.google.gson.annotations.SerializedName
-
 data class DomainCoin(
     val isActive: Boolean,
     val isNew: Boolean,
