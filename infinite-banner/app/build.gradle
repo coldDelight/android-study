@@ -48,7 +48,7 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 
     //내꺼 라이브러리 불러오기
-    implementation 'com.github.coldDelight:hashtag-example:1.0'
+    implementation 'com.github.coldDelight:hashtag-example:1.1'
 
     //viewPager
     implementation "androidx.viewpager2:viewpager2:1.0.0"

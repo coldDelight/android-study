@@ -9,6 +9,12 @@
         android:gravity="center"
         tools:context=".MainActivity">
 
+        <com.example.hashtag_text.HashtagText
+            android:id="@+id/HashtagText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="해시태그 입력" />
+
         <EditText
             android:id="@+id/editTextNumber"
             android:layout_width="match_parent"

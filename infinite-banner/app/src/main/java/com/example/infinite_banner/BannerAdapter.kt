@@ -9,10 +9,10 @@ import androidx.recyclerview.widget.RecyclerView
 class BannerAdapter(var list: MutableList<Int>) : RecyclerView.Adapter<BannerAdapter.BannerViewHolder>() {
 
     inner class BannerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var imageView_banner = itemView.findViewById<ImageView>(R.id.imageView_banner)
+        var imageViewBanner = itemView.findViewById<ImageView>(R.id.imageView_banner)
 
         fun onBind(res: Int) {
-            imageView_banner.setImageResource(res)
+            imageViewBanner.setImageResource(res)
         }
     }
 
