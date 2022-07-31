@@ -9,7 +9,6 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
-import com.example.data.remote.api.CoinApi
 
 import javax.inject.Singleton
 

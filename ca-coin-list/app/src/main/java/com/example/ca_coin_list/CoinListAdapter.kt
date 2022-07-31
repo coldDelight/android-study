@@ -1,5 +1,6 @@
 package com.example.ca_coin_list
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -19,6 +20,11 @@ class CoinListAdapter(private val list: List<PresentationCoin>): RecyclerView.Ad
 
     override fun onBindViewHolder(holder: CoinViewHolder, position: Int) {
         holder.bind(list[position])
+        holder.itemView.setOnClickListener{
+//            Log.d("hello", "this is where click happen -  ${list[position].id}} ")
+            Log.e("hello", "this is where click happen -  ${list[position].id}} ")
+        }
+
     }
 
     override fun getItemCount(): Int = list.size

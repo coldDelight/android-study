@@ -13,10 +13,10 @@ import javax.inject.Inject
 class GetCoinDetailUseCase @Inject constructor(
     private val coinDetailRepository: CoinDetailRepository
 ) {
-    operator fun invoke(): Flow<Resource<DetailPresentationCoin>> = flow {
+    operator fun invoke(id:String): Flow<Resource<DetailPresentationCoin>> = flow {
         try {
             emit(Resource.Loading<DetailPresentationCoin>())
-            val coinDetail = coinDetailRepository.getCoinDetail().toDetailPresentationCoin()
+            val coinDetail = coinDetailRepository.getCoinDetail(id).toDetailPresentationCoin()
             emit(Resource.Success<DetailPresentationCoin>(coinDetail))
         } catch (e: HttpException) {
             emit(Resource.Error<DetailPresentationCoin>(e.localizedMessage ?: "알 수 없는 오류 입니다."))

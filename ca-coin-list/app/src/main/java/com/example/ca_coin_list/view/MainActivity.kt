@@ -52,7 +52,6 @@ class MainActivity : AppCompatActivity() {
                             )
                         )
                     }
-
                     State.ERROR -> {
                         binding.loading.visibility = View.GONE
                         Toast.makeText(this@MainActivity, it.error, Toast.LENGTH_SHORT).show()

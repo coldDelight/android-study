@@ -8,7 +8,7 @@ import javax.inject.Inject
 class CoinDetailDataSourceImpl @Inject constructor(
     private val retrofit: Retrofit
 ) : CoinDetailDataSource {
-    override suspend fun getCoinDetail(): CoinDetailResponse {
-        return retrofit.create(CoinDetailDataSource::class.java).getCoinDetail()
+    override suspend fun getCoinDetail(id:String): CoinDetailResponse {
+        return retrofit.create(CoinDetailDataSource::class.java).getCoinDetail(id)
     }
 }

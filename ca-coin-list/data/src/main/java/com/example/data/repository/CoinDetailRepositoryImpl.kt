@@ -9,8 +9,8 @@ import javax.inject.Inject
 class CoinDetailRepositoryImpl @Inject constructor(
     private val api: CoinDetailDataSource
 ) : CoinDetailRepository {
-    override suspend fun getCoinDetail(): DomainCoinDetailResponse {
-        return api.getCoinDetail().toDomainCoinDetailResponse()
+    override suspend fun getCoinDetail(id:String): DomainCoinDetailResponse {
+        return api.getCoinDetail(id).toDomainCoinDetailResponse()
     }
 
 }
