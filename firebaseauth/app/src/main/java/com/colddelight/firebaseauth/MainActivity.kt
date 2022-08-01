@@ -25,34 +25,34 @@ import com.google.firebase.ktx.Firebase
 
 
 class MainActivity : AppCompatActivity() {
-    lateinit var binding: ActivityMainBinding
-    private lateinit var auth : FirebaseAuth
-    private lateinit var googleSignInClient : GoogleSignInClient
-    fun replaceFragment(fragment:Fragment) {//프레그먼트 교체
-        supportFragmentManager.beginTransaction().replace(R.id.fcv, fragment).commit()
-    }
-    override fun onCreate(savedInstanceState: Bundle?) {
+    private lateinit var  binding: ActivityMainBinding
+    private  val auth : FirebaseAuth = FirebaseAuth.getInstance()
 
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        auth = FirebaseAuth.getInstance()
         if(auth.currentUser==null){//로그인 안함
-            binding.loginBtn2.setOnClickListener{
-                signInGoogle()
-            }
+            replaceFragment(LoginFragment())
         }else{//로그인 한 상태
-            binding.loginBtn2.visibility =  View.GONE
             replaceFragment(HomeFragment())
         }
+    }
+    fun replaceFragment(fragment:Fragment) {//프레그먼트 교체
+        supportFragmentManager.beginTransaction().replace(R.id.fcv, fragment).commit()
+    }
+
+    fun removeCache(){
+        GoogleSignIn.getClient(this , GoogleSignInOptions.DEFAULT_SIGN_IN).signOut()
+    }
+
+    fun signInGoogle(){
         val googleSignInOptions = GoogleSignInOptions.Builder(
             GoogleSignInOptions.DEFAULT_SIGN_IN
         ).requestIdToken(getString(R.string.default_web_client_id))
             .requestEmail()
             .build()
-        googleSignInClient = GoogleSignIn.getClient(this , googleSignInOptions)
-    }
-    fun signInGoogle(){
+        val googleSignInClient = GoogleSignIn.getClient(this , googleSignInOptions)
         val signInIntent = googleSignInClient.signInIntent
         launcher.launch(signInIntent)
     }
@@ -73,18 +73,15 @@ class MainActivity : AppCompatActivity() {
             Log.e("res err", "handleResults: ${task.exception.toString()}", )
         }
     }
-
     private fun updateUI(account: GoogleSignInAccount) {
         val credential = GoogleAuthProvider.getCredential(account.idToken , null)
         auth.signInWithCredential(credential).addOnCompleteListener {
             if (it.isSuccessful){
-                binding.loginBtn2.visibility =  View.GONE
                 replaceFragment(HomeFragment())
             }else{
                 Toast.makeText(this, it.exception.toString() , Toast.LENGTH_SHORT).show()
             }
         }
     }
-
 
 }
