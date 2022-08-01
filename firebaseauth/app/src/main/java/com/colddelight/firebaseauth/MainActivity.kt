@@ -1,10 +1,17 @@
 package com.colddelight.firebaseauth
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
+import android.view.View
 import android.widget.Button
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.Nullable
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import com.colddelight.firebaseauth.databinding.ActivityMainBinding
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -18,91 +25,66 @@ import com.google.firebase.ktx.Firebase
 
 
 class MainActivity : AppCompatActivity() {
-    var googleSignInClient: GoogleSignInClient? = null
-    var firebaseAuth: FirebaseAuth? = null
-    private val auth: FirebaseAuth = Firebase.auth
-
-
+    lateinit var binding: ActivityMainBinding
+    private lateinit var auth : FirebaseAuth
+    private lateinit var googleSignInClient : GoogleSignInClient
+    fun replaceFragment(fragment:Fragment) {//프레그먼트 교체
+        supportFragmentManager.beginTransaction().replace(R.id.fcv, fragment).commit()
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
 
-
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-
-        val btSignIn: Button = findViewById(R.id.button)
-
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        auth = FirebaseAuth.getInstance()
+        if(auth.currentUser==null){//로그인 안함
+            binding.loginBtn2.setOnClickListener{
+                signInGoogle()
+            }
+        }else{//로그인 한 상태
+            binding.loginBtn2.visibility =  View.GONE
+            replaceFragment(HomeFragment())
+        }
         val googleSignInOptions = GoogleSignInOptions.Builder(
             GoogleSignInOptions.DEFAULT_SIGN_IN
         ).requestIdToken(getString(R.string.default_web_client_id))
             .requestEmail()
             .build()
-        googleSignInClient= GoogleSignIn.getClient(this
-            ,googleSignInOptions);
-
-        btSignIn.setOnClickListener(){
-            val intent = googleSignInClient!!.signInIntent
-            startActivityForResult(intent, 100)
+        googleSignInClient = GoogleSignIn.getClient(this , googleSignInOptions)
+    }
+    fun signInGoogle(){
+        val signInIntent = googleSignInClient.signInIntent
+        launcher.launch(signInIntent)
+    }
+    private val launcher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
+            result ->
+        if (result.resultCode == Activity.RESULT_OK){
+            val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
+            handleResults(task)
         }
-        firebaseAuth=FirebaseAuth.getInstance();
-        val firebaseUser = firebaseAuth!!.currentUser
-//        val firebaseUser = FirebaseAuth.getInstance().currentUser
-
-        if (firebaseUser != null) {
-            startActivity(
-                Intent(this@MainActivity, MainActivity::class.java)
-                    .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            )
+    }
+    private fun handleResults(task: Task<GoogleSignInAccount>) {
+        if (task.isSuccessful){
+            val account : GoogleSignInAccount? = task.result
+            if (account != null){
+                updateUI(account)
+            }
+        }else{
+            Log.e("res err", "handleResults: ${task.exception.toString()}", )
         }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, @Nullable data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        // Check condition
-        if (requestCode == 100) {
-            // When request code is equal to 100
-            // Initialize task
-            val signInAccountTask: Task<GoogleSignInAccount> = GoogleSignIn
-                .getSignedInAccountFromIntent(data)
-            // check condition
-            if (signInAccountTask.isSuccessful()) {
-                // When google sign in successful
-                // Initialize string
-                val s = "Google sign in successful"
-                // Initialize sign in account
-                try {
-                    // Initialize sign in account
-                    val googleSignInAccount: GoogleSignInAccount = signInAccountTask
-                        .getResult(ApiException::class.java)
-                    // Check condition
-                    if (googleSignInAccount != null) {
-                        // When sign in account is not equal to null
-                        // Initialize auth credential
-                        val authCredential = GoogleAuthProvider
-                            .getCredential(
-                                googleSignInAccount.idToken, null
-                            )
-                        // Check credential
-                        firebaseAuth!!.signInWithCredential(authCredential)
-                            .addOnCompleteListener(
-                                this
-                            ) { task ->
-                                // Check condition
-                                if (task.isSuccessful) {
-                                    // When task is successful
-                                    // Redirect to profile activity
-                                    startActivity(
-                                        Intent(this@MainActivity, MainActivity::class.java)
-                                            .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                                    )
-                                } else {
-                                    // When task is unsuccessful
-                                }
-                            }
-                    }
-                } catch (e: ApiException) {
-                    e.printStackTrace()
-                }
+    private fun updateUI(account: GoogleSignInAccount) {
+        val credential = GoogleAuthProvider.getCredential(account.idToken , null)
+        auth.signInWithCredential(credential).addOnCompleteListener {
+            if (it.isSuccessful){
+                binding.loginBtn2.visibility =  View.GONE
+                replaceFragment(HomeFragment())
+            }else{
+                Toast.makeText(this, it.exception.toString() , Toast.LENGTH_SHORT).show()
             }
         }
     }
+
+
 }
