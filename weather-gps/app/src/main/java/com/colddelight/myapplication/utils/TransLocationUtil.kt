@@ -13,7 +13,6 @@ object TransLocationUtil {
     )
 
     fun convertLocation(location: Location): TransLocation {
-        Log.e("before convert",""+location.latitude +" "+ location.longitude)
         val grid = 5.0
         val xo = 43
         val yo = 136

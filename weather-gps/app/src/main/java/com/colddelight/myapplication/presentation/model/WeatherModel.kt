@@ -1,7 +1,5 @@
 package com.colddelight.myapplication.presentation.model
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import com.colddelight.domain.model.DomainWeather
 import com.colddelight.myapplication.utils.RainType
 import com.colddelight.myapplication.utils.WindType
@@ -15,7 +13,8 @@ data class WeatherModel(
     val rainType: RainType,
     val windDirection: String,
     val windSpeed: String,
-    val now: String
+    val now: String,
+//    val city:String
 )
 
 fun DomainWeather.toWeatherModel(): WeatherModel {
@@ -69,3 +68,4 @@ fun DomainWeather.toWeatherModel(): WeatherModel {
         now = time
     )
 }
+

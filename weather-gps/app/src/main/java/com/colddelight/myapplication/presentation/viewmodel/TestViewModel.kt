@@ -1,39 +1,35 @@
 package com.colddelight.myapplication.presentation.viewmodel
 
-import android.content.Intent
 import android.location.Location
-import android.os.Build
 import android.util.Log
-import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.colddelight.myapplication.BuildConfig
-import com.colddelight.domain.repository.LocationRepository
-import com.colddelight.myapplication.TestActivity
 import com.colddelight.myapplication.presentation.model.WeatherModel
 import com.colddelight.myapplication.usecase.WeatherUseCase
+import com.colddelight.myapplication.utils.CityInfo
 import com.colddelight.myapplication.utils.Resource
-import com.colddelight.myapplication.utils.TransLocationUtil
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import java.time.LocalDateTime
 import javax.inject.Inject
 
+
 @HiltViewModel
-class MainViewModel @Inject constructor(
+class TestViewModel @Inject constructor(
     private val useCase: WeatherUseCase,
-    private val tracker: LocationRepository
 ): ViewModel() {
     data class WeatherState(
         val weatherData: WeatherModel? = null,
         val isLoading: Boolean = true,
         val error: String = ""
     )
+
     private val _state: MutableStateFlow<WeatherState> = MutableStateFlow(WeatherState())
     val state: StateFlow<WeatherState> get() = _state.asStateFlow()
 
-    private fun createRequestParams(location: Location): HashMap<String, String> {
+    private fun createRequestParams(city: String): HashMap<String, String> {
 
         val now = LocalDateTime.now()
 
@@ -79,7 +75,18 @@ class MainViewModel @Inject constructor(
             }
         }
 
-        val transLocation = TransLocationUtil.convertLocation(location)
+//        val transLocation = CityInfo.Daegu
+
+        val cityInfo = CityInfo()
+        val transLocation = when (city) {
+            "인천" -> cityInfo.Incheon
+            "대전" -> cityInfo.Daejeon
+            "대구" -> cityInfo.Daegu
+            "부산" -> cityInfo.Busan
+            "울산" -> cityInfo.Ulsan
+            else -> cityInfo.Err
+        }
+        Log.e("after convert$city",""+ transLocation.nx +"  "+ transLocation.ny)
 
         return HashMap<String, String>().apply {
             put("serviceKey", BuildConfig.SERVICE_KEY)
@@ -91,33 +98,29 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    fun getWeatherData() {
+    fun getWeatherCityData(city:String) {
         viewModelScope.launch {
             _state.value = WeatherState(
                 isLoading = true
             )
-            tracker.getCurrentLocation()?.let { location ->
 
-                useCase.invoke(createRequestParams(location)).onEach { result ->
-                    when(result) {
-                        is Resource.Success -> {
-                            _state.value = WeatherState(
-                                isLoading = false,
-                                weatherData = result.data
-                            )
-                        }
-                        is Resource.Error -> {
-                            _state.value = WeatherState(
-                                isLoading = false,
-                                error = result.message ?: "알 수 없는 에러."
-                            )
-                        }
+            useCase.invoke(createRequestParams(city)).onEach { result ->
+                when(result) {
+                    is Resource.Success -> {
+                        _state.value = WeatherState(
+                            isLoading = false,
+                            weatherData = result.data
+                        )
                     }
-                }.launchIn(viewModelScope)
-            }
-
+                    is Resource.Error -> {
+                        _state.value = WeatherState(
+                            isLoading = false,
+                            error = result.message ?: "알 수 없는 에러."
+                        )
+                    }
+                }
+            }.launchIn(viewModelScope)
         }
     }
-
 
 }
