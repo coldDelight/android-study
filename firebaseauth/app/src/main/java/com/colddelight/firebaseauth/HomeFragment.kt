@@ -1,5 +1,7 @@
 package com.colddelight.firebaseauth
 
+
+
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
@@ -15,6 +17,7 @@ import java.io.File
 class HomeFragment() : Fragment(R.layout.fragment_home) {
     private val auth : FirebaseAuth = FirebaseAuth.getInstance()
     lateinit var binding: FragmentHomeBinding
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
