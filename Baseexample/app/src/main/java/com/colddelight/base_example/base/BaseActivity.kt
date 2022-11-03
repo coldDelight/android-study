@@ -8,17 +8,15 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.ViewModelProvider
+import com.google.android.material.snackbar.Snackbar
 
-abstract class BaseActivity<DB : ViewDataBinding,VM: BaseViewModel>(
+abstract class BaseActivity<DB : ViewDataBinding>(
     @LayoutRes val layoutId: Int,
-    private val viewModelClass : Class<VM>
 ) : AppCompatActivity() {
-    private val binding by lazy {
+    val binding by lazy {
         DataBindingUtil.setContentView(this,layoutId) as DB
     }
-    val viewModel by lazy {
-        ViewModelProvider(this)[viewModelClass]
-    }
+
     abstract fun onInitDataBinding()
     //abstract fun setObserver()
     //abstract fun setView()
@@ -30,5 +28,10 @@ abstract class BaseActivity<DB : ViewDataBinding,VM: BaseViewModel>(
     protected fun showToast(msg: String) {
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
     }
+    protected fun showSnackBar(msg: String) {
+        Snackbar.make(binding.root,msg,Snackbar.LENGTH_SHORT).show()
+    }
+
+
 
 }
