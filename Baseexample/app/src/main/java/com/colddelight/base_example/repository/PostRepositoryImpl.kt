@@ -1,11 +1,12 @@
 package com.colddelight.base_example.repository
 
-import android.util.Log
-import com.colddelight.base_example.data.NetworkObject
 import com.colddelight.base_example.data.Post
+import com.colddelight.base_example.data.PostDataSource
 
-class PostRepositoryImpl():PostRepository{
+class PostRepositoryImpl(
+    private val api :PostDataSource
+):PostRepository{
     override suspend fun getPost(): List<Post> {
-        return NetworkObject.getRetrofitService.getPost()
+        return api.getPost()
     }
 }
