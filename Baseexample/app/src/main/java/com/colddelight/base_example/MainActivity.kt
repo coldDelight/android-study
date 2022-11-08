@@ -22,20 +22,20 @@ class MainActivity : BaseActivity<ActivityMainBinding>(
         setContentView(R.layout.activity_main)
 //        showToast("😀")
 
-        binding.btnTest.setOnClickListener {
-            viewModel.getPost()
-
-        }
-        lifecycleScope.launchWhenStarted {
-            viewModel.state.collectLatest {
-                if (it.state==ErrState.SUCCESS){
-                    binding.tvMain.text = it.data[0].title
-                }else if(it.state!=ErrState.BEFORE){
-                    binding.tvMain.text = "ERR"
-                    errHandler(it.errMsg,it.state)
-                }
-            }
-        }
+//        binding.btnTest.setOnClickListener {
+//            viewModel.getPost()
+//
+//        }
+//        lifecycleScope.launchWhenStarted {
+//            viewModel.state.collectLatest {
+//                if (it.state==ErrState.SUCCESS){
+//                    binding.tvMain.text = it.data[0].title
+//                }else if(it.state!=ErrState.BEFORE){
+//                    binding.tvMain.text = "ERR"
+//                    errHandler(it.errMsg,it.state)
+//                }
+//            }
+//        }
     }
     private fun errHandler(msg : String,type : ErrState){
         when (type){

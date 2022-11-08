@@ -3,6 +3,7 @@ package com.colddelight.base_example.viewmodel
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.colddelight.base_example.base.BaseViewModel
 import com.colddelight.base_example.data.Post
 import com.colddelight.base_example.repository.PostRepository
 import com.colddelight.base_example.repository.PostRepositoryImpl
@@ -17,7 +18,7 @@ import javax.inject.Inject
 @HiltViewModel
 class MainViewModel @Inject constructor(
     private val repository: PostRepository
-    ): ViewModel() {
+    ): BaseViewModel() {
     data class State(
         val data: List<Post> = arrayListOf(),
         val state: ErrState = ErrState.BEFORE,

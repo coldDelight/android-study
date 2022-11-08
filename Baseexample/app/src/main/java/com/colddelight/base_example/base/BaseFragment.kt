@@ -11,6 +11,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.google.android.material.snackbar.Snackbar
 
 abstract class BaseFragment<DB:ViewDataBinding,VM:BaseViewModel>(
     @LayoutRes private val layoutId: Int,
@@ -44,6 +45,9 @@ abstract class BaseFragment<DB:ViewDataBinding,VM:BaseViewModel>(
     }
     protected fun showToast(msg: String) {
         Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
+    }
+    protected fun showSnackBar(msg: String) {
+        Snackbar.make(binding.root,msg, Snackbar.LENGTH_SHORT).show()
     }
 
 }
