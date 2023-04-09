@@ -2,7 +2,7 @@
 
 
 ```
-❓  안드로이드 공부
+❓  안드로이드 공부용 저장소
 ```
 
 - [Baseexample](https://github.com/coldDelight/android-study/tree/main/Baseexample/app/src/main/java/com/colddelight/base_example) : Base(ViewModel, Fragment, Activity)관련 
